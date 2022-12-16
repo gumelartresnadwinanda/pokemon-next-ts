@@ -29,10 +29,13 @@ import type { PageWithLayout } from './_app'
 import { OFFICIAL_API_POKEMON, Pokemon } from '../utils/consts'
 import { APICallP } from '../utils/axios'
 import { useRouter } from 'next/router'
+import { TransContent } from '../utils/trans-content'
 import Image from 'next/image'
 
 const Detail: PageWithLayout = () => {
   const router = useRouter()
+  const { locale } = router;
+  const trans = TransContent[locale || 'en'];
   const { slug } = router.query;
   const [pokeDetail, setPokeDetail] = useState<Pokemon | null>(null);
   const [evolution, setEvolution] = useState([]);
@@ -107,16 +110,16 @@ const Detail: PageWithLayout = () => {
             <PokeDetailName>{pokeDetail.name}</PokeDetailName>
             <SpaceContainer>
               <FlexContainer>
-                <KeyTitle>Weight</KeyTitle>
+                <KeyTitle>{trans.weight}</KeyTitle>
                 <KeyValue>{pokeDetail.weight}</KeyValue>
               </FlexContainer>
               <FlexContainer>
-                <KeyTitle>Height</KeyTitle>
+                <KeyTitle>{trans.height}</KeyTitle>
                 <KeyValue>{pokeDetail.height}</KeyValue>
               </FlexContainer>
             </SpaceContainer>
             <FlexContainer>
-              <KeyTitle>Abilities</KeyTitle>
+              <KeyTitle>{trans.abilities}</KeyTitle>
               <AbilityListContainer>
               {
                 (pokeDetail.abilities || []).map((ab, index) => (
@@ -126,15 +129,16 @@ const Detail: PageWithLayout = () => {
               </AbilityListContainer>
             </FlexContainer>
             <FlexContainer>
-              <KeyTitle>Type</KeyTitle>
+              <KeyTitle>{trans.type}</KeyTitle>
               <PokeTypeContainer>
                 {
                   (pokeDetail.types || []).map((ty, index) => (
                     <SmallPokeType 
                       key={`type-${index}`} 
                       type={ty.type.name}
+                      onClick={() => router.push(`/type?s=${ty.type.name}`)}
                     >
-                      {ty.type.name}
+                      {trans[ty.type.name]}
                     </SmallPokeType>
                   ))
                 }
@@ -144,7 +148,7 @@ const Detail: PageWithLayout = () => {
         </FlexContainer>
       </SectionContainer>
       <SectionContainer background='netral' index={1}>
-        <TitleSection>Other Images</TitleSection>
+        <TitleSection>{trans.oImages}</TitleSection>
         <WrapFlexContainer>
           {
             image.map((img, index) => (
@@ -156,7 +160,7 @@ const Detail: PageWithLayout = () => {
         </WrapFlexContainer>
       </SectionContainer>
       <SectionContainer background='netral' index={1}>
-        <TitleSection>Stats</TitleSection>
+        <TitleSection>{trans.stats}</TitleSection>
         <FlexContainer>
           {
             pokeDetail.stats.map((st, index) => (
@@ -169,7 +173,7 @@ const Detail: PageWithLayout = () => {
         </FlexContainer>
       </SectionContainer>
       <SectionContainer background='netral' index={1}>
-        <TitleSection>Evolution</TitleSection>
+        <TitleSection>{trans.evolution}</TitleSection>
         <EvolutionFlexContainer>
           {
             evolution.map((ev: any, index) => (

@@ -27,27 +27,3 @@ p, ul {
 .pb-54 {
   padding-bottom: 54px;
 }
-
-.MuiFilledInput-input {
-  padding-top: 4px;
-  padding-bottom: 4px;
-  color: #7B8082;
-}
-.MuiFilledInput-root .MuiSelect-icon {
-  color: #7B8082;
-}
-.MuiFilledInput-root::before {
-  content: none;
-}
-.MuiFilledInput-root {
-  border-radius: 4px;
-}
-.MuiSelect-select.MuiSelect-filled {
-  display: flex;
-  align-items: center;
-}
-.MuiSelect-select.MuiSelect-filled:before {
-  content: url('/language.svg');
-  padding-right: 8px;
-  padding-top: 4px;
-}

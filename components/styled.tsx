@@ -359,7 +359,7 @@ export const SmallPokeType = styled('span')<StyledProps>`
   line-height: 18px;
   color: #FFFFFF;
   text-transform: capitalize;
-
+  cursor: pointer;
 `
 export const WrapFlexContainer = styled('div')`
   display: flex;  

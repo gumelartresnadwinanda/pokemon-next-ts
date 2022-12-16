@@ -44,11 +44,16 @@ import { useRouter } from 'next/router'
 import bulbasaur from '../public/bulbasur.png';
 import charmander from '../public/charmander.png';
 import squirtle from '../public/squirtle.png';
+import { TransContent } from '../utils/trans-content'
 
 
 const Main: PageWithLayout = () => {
   const router = useRouter()
 
+  const { locale } = router;
+  const { mainTitle, subTitle, ctaTitle, generation, page } = TransContent[locale || 'en'];
+  const trans = TransContent[locale || 'en'];
+  
   const [open, setOpen] = useState(false)
   const [pokemon, setPokemon] = useState([]);
   const [count, setCount] = useState(0);
@@ -124,9 +129,9 @@ const Main: PageWithLayout = () => {
       <SectionContainer background='netral' index={6}>
         <FlexContainer>
           <FixedContainer>
-            <PokeMainTitle>All the Pokémon data you&apos;ll ever need in one place!</PokeMainTitle>
-            <PokeSubTitle>thousand of compiled data into one</PokeSubTitle>
-            <Button sx={ButtonStyle} variant="contained" onClick={() => scrollToRef()}>Check PokèDex</Button>
+            <PokeMainTitle>{mainTitle}</PokeMainTitle>
+            <PokeSubTitle>{subTitle}</PokeSubTitle>
+            <Button sx={ButtonStyle} variant="contained" onClick={() => scrollToRef()}>{ctaTitle}</Button>
           </FixedContainer>
           <HalfContainer>
             <PokemonPosition>
@@ -148,7 +153,7 @@ const Main: PageWithLayout = () => {
         <Accent top='' left='' right='-15%' bottom='-15%' rotation='90' opacity={.5} color='netral' />
 
         <PokeCardTitleContainer>
-          <PokeCardSectionSubTitle>All Generation totaling {count} Pokemon</PokeCardSectionSubTitle>
+          <PokeCardSectionSubTitle>{generation} {count} Pokemon</PokeCardSectionSubTitle>
         </PokeCardTitleContainer>
         <PokeCardContainer>
           {
@@ -172,7 +177,7 @@ const Main: PageWithLayout = () => {
                   <PokeTypeContainer>
                     {
                       poke.types.map((poketype: any, index: number) => (
-                        <PokeType key={`type-${index}`} type={poketype?.type?.name}>{poketype?.type?.name}</PokeType>
+                        <PokeType key={`type-${index}`} type={poketype?.type?.name}>{trans[poketype?.type?.name]}</PokeType>
                       ))
                     }
                   </PokeTypeContainer>
@@ -181,7 +186,7 @@ const Main: PageWithLayout = () => {
             }
         </PokeCardContainer>
         <SpaceContainer className='pb-54'>
-          <PaginationText type='netral'>Per Page: 
+          <PaginationText type='netral'>Per {page}: 
             <Select
               value={pagination.rowPerPage.toString()}
               label="Age"
@@ -249,16 +254,16 @@ const Main: PageWithLayout = () => {
                     <PokeDetailName>{selected.name}</PokeDetailName>
                     <SpaceContainer>
                       <FlexContainer>
-                        <KeyTitle>Weight</KeyTitle>
+                        <KeyTitle>{trans.weight}</KeyTitle>
                         <KeyValue>{selected.weight}</KeyValue>
                       </FlexContainer>
                       <FlexContainer>
-                        <KeyTitle>Height</KeyTitle>
+                        <KeyTitle>{trans.height}</KeyTitle>
                         <KeyValue>{selected.height}</KeyValue>
                       </FlexContainer>
                     </SpaceContainer>
                     <FlexContainer>
-                      <KeyTitle>Abilities</KeyTitle>
+                      <KeyTitle>{trans.abilities}</KeyTitle>
                       <AbilityListContainer>
                         {
                           (selected.abilities || []).map((ab, index) => (
@@ -268,7 +273,7 @@ const Main: PageWithLayout = () => {
                       </AbilityListContainer>
                     </FlexContainer>
                     <FlexContainer>
-                      <KeyTitle>Type</KeyTitle>
+                      <KeyTitle>{trans.type}</KeyTitle>
                       <PokeTypeContainer>
                         {
                           (selected.types || []).map((ty, index) => (
@@ -276,13 +281,13 @@ const Main: PageWithLayout = () => {
                               key={`type-${index}`} 
                               type={ty.type.name}
                             >
-                              {ty.type.name}
+                              {trans[ty.type.name]}
                             </SmallPokeType>
                           ))
                         }
                       </PokeTypeContainer>
                     </FlexContainer>
-                    <Button sx={MoreButtonStyle} variant="contained" onClick={() => router.push(`/${selected.name}`)}>More Detail</Button>
+                    <Button sx={MoreButtonStyle} variant="contained" onClick={() => router.push(`/${selected.name}`)}>{trans.more}</Button>
                   </PokeDetailConatainer>
                 </FlexContainer>
               </MainContainer>

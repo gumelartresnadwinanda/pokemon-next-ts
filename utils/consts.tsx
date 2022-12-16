@@ -25,6 +25,11 @@ export const POKEMON_TYPES = {
     'netral': '#FFFFFF',
 }
 
+export const LocaleDetail: any = {
+  'en': 'English',
+  'id': 'Indonesia'
+};
+
 export const COLOR_VAR = {
     'card': '#FFCB3B',
     'netral': '#FFFFFF',

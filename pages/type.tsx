@@ -24,10 +24,15 @@ import { OFFICIAL_API_POKEMON, Pokemon, POKEMON_TYPES } from '../utils/consts'
 import placeholder from '../public/pokemon.png';
 import { useRouter } from 'next/router'
 import { MenuItem, Pagination, Select, SelectChangeEvent } from '@mui/material'
+import { TransContent } from '../utils/trans-content'
 
 const Type: PageWithLayout = () => {
   const router = useRouter()
-  const [selectedType, setSelectedType] = useState<keyof typeof POKEMON_TYPES>('normal');
+  const { locale } = router;
+  const trans = TransContent[locale || 'en'];
+  const { query: { s }} = router;
+  const baseType : any = s || 'normal';
+  const [selectedType, setSelectedType] = useState<keyof typeof POKEMON_TYPES>(baseType);
   const [typeList, setTypeList] = useState([]);
   const [pokemonList, setPokemonList] = useState([]);
   const [pagination, setPagination] = useState({
@@ -142,7 +147,7 @@ const Type: PageWithLayout = () => {
         <Accent top='95%' left='-15%' right='' bottom='' rotation='90' opacity={1} color={selectedType} />
         <Accent top='20%' left='' right='-15%' bottom='' rotation='90' opacity={1} color={selectedType} />
           <PokemonTypeNavbar>
-              <PokemonTypeNavbarTitle>Pokemon Type</PokemonTypeNavbarTitle>
+              <PokemonTypeNavbarTitle>{trans.pokemonType}</PokemonTypeNavbarTitle>
               <PokemonTypeNavbarList>
                 {
                   typeList.map((types: any, index) => (
@@ -151,14 +156,14 @@ const Type: PageWithLayout = () => {
                       active={selectedType === types.name} 
                       color={types.name} 
                       onClick={() => handleSelected(types.name)}>
-                        {types.name}
+                        {trans[types.name]}
                     </PokemonTypeNavbarListItem>
                   ))
                 }
               </PokemonTypeNavbarList>
           </PokemonTypeNavbar>        
           <TableContainer>
-            <PokemonTypePageTitle>Pokemon With Type {selectedType}</PokemonTypePageTitle>
+            <PokemonTypePageTitle>{trans.pokemonWithType} {trans[selectedType]}</PokemonTypePageTitle>
             <PokemonTypePageCard>
               {
                 fetching 
@@ -183,7 +188,7 @@ const Type: PageWithLayout = () => {
                     <WrapFlexContainer>
                       {
                         pokemon?.types?.map((poketype: any, index: number) => (
-                          <TinyPokeType key={`type-${index}`} type={poketype?.type?.name}>{poketype?.type?.name}</TinyPokeType>
+                          <TinyPokeType key={`type-${index}`} type={poketype?.type?.name}>{trans[poketype?.type?.name]}</TinyPokeType>
                         ))
                       }
                     </WrapFlexContainer>
@@ -192,7 +197,7 @@ const Type: PageWithLayout = () => {
               }
             </PokemonTypePageCard>
             <SpaceContainer className='pb-54'>
-              <PaginationText type={selectedType}>Per Page: 
+              <PaginationText type={selectedType}>Per {trans.page}: 
                 <Select
                   value={pagination.rowsPerPage.toString()}
                   label="Age"
