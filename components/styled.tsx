@@ -36,6 +36,10 @@ type AccentProps = {
   rotation: string
 }
 
+type Nav = {
+  active: boolean
+}
+
 export const MainContainer = styled('div')`
   display: flex;
   flex-direction: column;
@@ -77,7 +81,7 @@ export const HeaderContainer = styled('header')`
   align-items: center;
 `
 
-export const NavItems = styled('div')`
+export const NavItems = styled('div')<Nav>`
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 700;
@@ -86,7 +90,7 @@ export const NavItems = styled('div')`
   text-align: center;
   flex: none;
   flex-grow: 0;
-  color: #42494D;
+  color: ${props => props.active ? '#E6AB09' : '#42494D'};
 `
 export const HalfContainer = styled('div')`
   width: 50%;

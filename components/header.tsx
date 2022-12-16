@@ -13,8 +13,8 @@ export default function Header() {
   return (
     <HeaderContainer>
       <Image src={pokemon} alt="pokemon" width={82} />
-      <Link href="/"><NavItems className={router.pathname == "/" ? "active" : ""}>{home}</NavItems></Link>
-      <Link href="type"><NavItems className={router.pathname == "/type" ? "active" : ""}>{pokemonType}</NavItems></Link>
+      <Link href="/"><NavItems active={router.pathname === "/"}>{home}</NavItems></Link>
+      <Link href="type"><NavItems active={router.pathname === "/type"}>{pokemonType}</NavItems></Link>
     </HeaderContainer>
   )
 }
